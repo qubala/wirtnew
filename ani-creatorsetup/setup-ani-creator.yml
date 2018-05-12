@@ -1,0 +1,19 @@
+- hosts: web_nodes
+  vars:
+    os_packages:
+      - python36
+      - python36-pip
+      - git
+      - tree
+      - mc
+  tasks:
+    - name: "Install os packages"
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ os_packages }}"
+      become: yes
+    - name: "Sync my repo"
+      git:
+        repo: https://bitbucket.org/jkanclerz-ani-creator.git
+        dest: ~/ani-creator
